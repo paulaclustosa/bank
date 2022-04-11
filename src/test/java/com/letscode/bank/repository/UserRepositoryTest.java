@@ -27,7 +27,7 @@ public class UserRepositoryTest {
   @Test
   void should_store_a_user() {
     User user = new User();
-    user.setName("João dos Testes");
+    user.setName("Joao dos Testes");
     user.setCpf("49402637702");
     user.setPassword("sun");
 
@@ -120,7 +120,7 @@ public class UserRepositoryTest {
   @Test
   void should_delete_user_by_id() {
     User userFirst = new User();
-    userFirst.setName("João dos Testes");
+    userFirst.setName("Joao dos Testes");
     userFirst.setCpf("49402637702");
     userFirst.setPassword("sun");
 
@@ -154,12 +154,29 @@ public class UserRepositoryTest {
     Assertions.assertFalse(usersAfterOneDeleted.contains(userThird));
   }
 
+  @Test
   void exists_by_id_should_return_true_for_stored_user() {
+    User user = new User();
+    user.setName("Joao dos Testes");
+    user.setCpf("49402637702");
+    user.setPassword("sun");
 
+    entityManager.persist(user);
+    Assertions.assertTrue(userRepository.existsById(user.getId()));
   }
 
+  @Test
   void exists_by_id_should_return_false_for_user_not_stored() {
+    User user = new User();
+    user.setName("Joao dos Testes");
+    user.setCpf("49402637702");
+    user.setPassword("sun");
 
+    entityManager.persist(user);
+    Integer userId = user.getId();
+
+    entityManager.remove(user);
+    Assertions.assertFalse(userRepository.existsById(userId));
   }
 
 }
